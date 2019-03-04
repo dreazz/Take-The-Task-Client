@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import TaskCard from './TaskCard'
 import Form from './Form';
 import axios from 'axios';
+import '../static/taskcontainer.css'
 
 export default class TaskContainer extends Component {
   state = {
@@ -9,8 +10,10 @@ export default class TaskContainer extends Component {
     task: {
       title: '',
       body: '',
+      id:'',
     },
-
+  create:false,
+  edit:false,
 
 
   }
@@ -54,7 +57,8 @@ export default class TaskContainer extends Component {
           .then((tasks) => {
             console.log(tasks.data)
             this.setState({
-              tasks: tasks.data
+              tasks: tasks.data,
+              create:false
             })
           })
       })
@@ -74,14 +78,57 @@ export default class TaskContainer extends Component {
 
       }) // change for array element pop
   }
+  editTask = (e) => {
+    
+    axios.put(`http://localhost:5000/task/${this.state.id}`, {
+      title: this.state.task.title,
+      body: this.state.task.body
+    })
+    .then(()=> this.componentDidMount())
+    this.showEditForm()
+  }
+  showForm = ()=>{
+     if (this.state.create === false) {
+      //show edit form
+      this.setState({
+        create: true
+      })
+    } else {
+      //close edit form
+      this.setState({
+        create: false
+      })
+    }
+  }
+  showEditForm = (id) => {
+    console.log("ediiiit")
+    if (this.state.edit === false) {
+      //show edit form
+      this.setState({
+        edit: true,
+        id:id
+      })
+    } else {
+      //close edit form
+      this.setState({
+        edit: false
+      })
+    }
+  }
 
   render() {
     return (
       <div>
-        <Form onSubmitForm={this.onSubmitForm} onChangeTitle={this.onChangeTitle} onChangeBody={this.onChangeBody}>Create</Form>
+          <button onClick={this.showForm}>nuevo</button>
+          
+        <div className="tasks">
         {this.state.tasks.map((task) => {
-          return <TaskCard title={task.title} body={task.body} onClickDelete={() => this.deleteTask(task._id)} id={task._id}></TaskCard>
+          return <TaskCard  title={task.title} body={task.body} onClickDelete={() => this.deleteTask(task._id)} showEditForm={()=> this.showEditForm(task._id)} id={task._id}></TaskCard>
         })}
+        
+        </div>
+        {this.state.edit ? <Form onClick={this.showEditForm} onSubmitForm={this.editTask} edit={this.state.edit} onChangeTitle={this.onChangeTitle} onChangeBody={this.onChangeBody}>Edit</Form> : false}
+        {this.state.create ? <Form onSubmitForm={this.onSubmitForm} onClick={this.showForm}onChangeTitle={this.onChangeTitle} onChangeBody={this.onChangeBody}>Create</Form>:false}
 
       </div>
     )

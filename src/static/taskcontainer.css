@@ -1,0 +1,48 @@
+.tasks{
+  margin: 0 auto;
+  width: 80%;
+  
+}
+.card{
+  border:0.5px solid #5f00d4;
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin:1rem;
+}
+
+.btn{
+  width:5rem;
+  border:0px;
+  margin:1rem
+  
+}
+.btn-edit{
+  background-color:#5f00d4;
+}
+.btn-delete{
+  background-color:#ff0041;
+
+}
+.form{
+  position: absolute;
+  top: 20%;
+  left: 30%;
+  width: 50%;
+  background:white;
+  height:20rem;
+  border: 1px solid black;
+  box-shadow: 0px 0px 14px 1px black;
+
+}
+.form form{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  height: 100%;
+  justify-content: center;
+}
+.form form input{
+  width:40%
+}
