@@ -8,10 +8,10 @@ export default class Form extends Component {
     return (
       <div className="form">
         <form onSubmit={this.props.onSubmitForm}>
-          <button onClick={this.props.onClick}>x</button>
+          <i className="btn btn-close" onClick={this.props.onClick}>x</i>
           <input type="text" name="title" value={this.props.valueTitle} onChange={this.props.onChangeTitle}  />
-          <input type="text" name="body" value={this.props.valueBody} onChange={this.props.onChangeBody} />
-          <button type="submit" value="Create">{this.props.children}</button>
+          <input className="text-area"type="text"input name="body" value={this.props.valueBody} onChange={this.props.onChangeBody} />
+          <button className="btn" type="submit" value="Create">{this.props.children}</button>
         </form>
       </div>
     )

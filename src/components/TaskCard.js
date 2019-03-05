@@ -13,7 +13,8 @@ export default class TaskCard extends Component {
         <p>{this.props.body}</p>
         <div className="button-container">
         <button className="btn btn-delete" onClick={this.props.onClickDelete}>Delete</button>
-        <button className="btn btn-edit" onClick={this.props.showEditForm}>Edit</button>
+        <i className="btn btn-edit" onClick={this.props.showEditForm}>Edit</i>
+        <button className="btn btn-done" onClick={this.props.done}>Done</button>
         </div>
       </div>
     )

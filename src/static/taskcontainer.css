@@ -15,15 +15,16 @@
 .btn{
   width:5rem;
   border:0px;
-  margin:1rem
+  margin:1rem;
+  cursor: pointer;
   
 }
 .btn-edit{
   background-color:#5f00d4;
+  
 }
 .btn-delete{
   background-color:#ff0041;
-
 }
 .form{
   position: absolute;
@@ -36,6 +37,10 @@
   box-shadow: 0px 0px 14px 1px black;
 
 }
+.text-area{
+  height: 8rem;
+  margin: 1rem;
+}
 .form form{
   display:flex;
   flex-direction:column;
@@ -45,4 +50,7 @@
 }
 .form form input{
   width:40%
+}
+.tasks-done .btn{
+display: none;
 }
