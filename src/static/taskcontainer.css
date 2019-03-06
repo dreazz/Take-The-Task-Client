@@ -1,45 +1,111 @@
+.container{
+  margin:2rem 0;
+}
+.task-container{
+  display: flex;
+  flex-direction: column;
+}
 .tasks{
-  margin: 0 auto;
-  width: 80%;
+  margin-top:1rem;
+  width: 100%;
+  display: flex;
+  overflow-x: scroll;
   
 }
 .card{
-  border:0.5px solid #5f00d4;
-  width:100%;
+  border:0.5px solid grey;
+  min-width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin:1rem;
+  margin:0.4rem 0.5rem;
+  border-radius: 7px;
+  padding:1rem;
+  text-align:center;
 }
-
+.card:hover{
+  
+  border: 0px solid black;
+  box-shadow: 0px 0px 19px 0px #2FBF71;
+}
+/* .card:active{
+  border: 0px solid black;
+  box-shadow: 0px 0px 19px 0px #2FBF71;
+}
+.card:visited{
+  border: 0px solid black;
+  box-shadow: 0px 0px 19px 0px #2FBF71;
+} */
 .btn{
-  width:5rem;
-  border:0px;
-  margin:1rem;
+  margin:0.5rem 2rem;
   cursor: pointer;
   
 }
 .btn-edit{
-  background-color:#5f00d4;
+  color:#5f00d4;
   
 }
 .btn-delete{
-  background-color:#ff0041;
+  color:#ff0041;
+}
+.btn-done{
+  color:#2FBF71;
+}
+.btn-create{
+  color:white;
+  width: 20%;
+  margin: 0.5rem auto;
+  background: white;
+  border: 0px solid black;
+  border-radius: 7px;
+  height: 2rem;
+  background-color: #ff0041;
+}
+.btn-show-done{
+  color:white;
+  width: 20%;
+  margin: 0.5rem auto;
+  background: white;
+  border: 0px solid black;
+  border-radius: 7px;
+  height: 2rem;
+  background-color: #2FBF71;
+}
+.btn-show-done h3{
+  margin:0;
+}
+.btn-create h3{
+  margin:0;
+}
+label{
+  margin-top:1rem;
+}
+.btn-submit{
+  color:white;
+  width: 20%;
+  margin: 0.5rem auto;
+  background: white;
+  border: 0px solid black;
+  border-radius: 7px;
+  height: 2rem;
+  background-color: #ff0041;
 }
 .form{
   position: absolute;
   top: 20%;
-  left: 30%;
+  left: 25%;
   width: 50%;
   background:white;
   height:20rem;
   border: 1px solid black;
   box-shadow: 0px 0px 14px 1px black;
+  padding-bottom: 2rem;
 
 }
 .text-area{
   height: 8rem;
   margin: 1rem;
+  min-width:80%;
 }
 .form form{
   display:flex;
@@ -51,6 +117,29 @@
 .form form input{
   width:40%
 }
-.tasks-done .btn{
+/* .tasks-done .btn-done{
 display: none;
+} */
+.tasks-done .btn-edit{
+  display: none;
+  }
+hr{
+  color:#ff0041;
+  width: 19%;
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ff0041;
+}
+
+.container-separator{
+  width: 40%;
+  border-top:1px solid black;
+}
+
+/***************SCROLL BAR*****************/
+
+.tasks::-webkit-scrollbar{
+  width:0px
+  
 }

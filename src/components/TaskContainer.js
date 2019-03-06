@@ -4,10 +4,11 @@ import Form from './Form';
 import axios from 'axios';
 import '../static/taskcontainer.css'
 
-import {Doughnut} from 'react-chartjs-2';
+import { Bubble, Doughnut, Bar, crazyLine, HorizontalBar, Radar } from 'react-chartjs-2';
 
 
 export default class TaskContainer extends Component {
+
   state = {
     tasks: [],
     task: {
@@ -20,12 +21,14 @@ export default class TaskContainer extends Component {
     edit: false,
     todoContainer: true,
     doneContainer: false,
-
+    taskCard: {
+      clicked: false,
+    }
 
   }
 
   componentDidMount = () => {
-    axios.get("http://localhost:5000/task")
+    axios.get(process.env.REACT_APP_BASE_URL + "/task")
       .then((tasks) => {
         console.log(tasks.data)
         this.setState({
@@ -54,12 +57,12 @@ export default class TaskContainer extends Component {
   }
   onSubmitForm = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5000/task", {
+    axios.post(process.env.REACT_APP_BASE_URL + "/task", {
       title: this.state.task.title,
       body: this.state.task.body,
     })
       .then(() => {
-        axios.get("http://localhost:5000/task")
+        axios.get(process.env.REACT_APP_BASE_URL + "/task")
           .then((tasks) => {
             console.log(tasks.data)
             this.setState({
@@ -72,7 +75,7 @@ export default class TaskContainer extends Component {
     // console.log("title", this.state.task.title)
   }
   deleteTask = (id) => {
-    axios.delete(`http://localhost:5000/task/${id}`, { body: id })
+    axios.delete(process.env.REACT_APP_BASE_URL + `/task/${id}`, { body: id })
       .then(() => {
 
         this.setState({
@@ -86,7 +89,7 @@ export default class TaskContainer extends Component {
   }
   editTask = (e) => {
 
-    axios.put(`http://localhost:5000/task/${this.state.id}`, {
+    axios.put(process.env.REACT_APP_BASE_URL + `/task/${this.state.id}`, {
       title: this.state.task.title,
       body: this.state.task.body
     })
@@ -122,78 +125,98 @@ export default class TaskContainer extends Component {
       })
     }
   }
-  done = async (id) => {
-    await this.setState({
-      task: {
-        status: 'done',
-        id: id
-      }
-    })
-    axios.put(`http://localhost:5000/task/${id}`, {
-      status: this.state.task.status
-    })
-      .then(() => {
-        this.componentDidMount()
+  done = async (id, status) => {
+    console.log(this.state.task.status)
+    if (status === 'done') {
 
+      axios.put(process.env.REACT_APP_BASE_URL + `/task/${id}`, {
+        status: 'todo'
       })
+        .then(() => {
+          this.componentDidMount()
+
+        })
+
+    } else {
+
+      axios.put(process.env.REACT_APP_BASE_URL + `/task/${id}`, {
+        status: 'done'
+      })
+        .then(() => {
+          this.componentDidMount()
+
+        })
+    }
   }
   showDoneContainer = () => {
-    if(this.state.todoContainer)
-    this.setState({
-      todoContainer:false,
-    })
-    else{
+    if (this.state.todoContainer)
       this.setState({
-        todoContainer:true,
+        todoContainer: false,
+      })
+    else {
+      this.setState({
+        todoContainer: true,
       })
     }
     this.componentDidMount()
   }
+
   data = {
     labels: [
-      'Red',
+      "hola",
       'Green',
       'Yellow'
     ],
     datasets: [{
       data: [300, 50, 100],
       backgroundColor: [
-      '#FF6384',
-      '#36A2EB',
-      '#FFCE56'
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
       ],
       hoverBackgroundColor: [
-      '#FF6384',
-      '#36A2EB',
-      '#FFCE56'
+        '#FF6384',
+        '#36A2EB',
+        '#FFCE56'
       ]
     }]
   }
-  
+
   render() {
     return (
-      <div>
-        <button onClick={this.showForm}>nuevo</button>
-        <button onClick={this.showDoneContainer}>{this.state.todoContainer ? "done":"to-do"} </button>
-        <Doughnut data={this.data} />
+      <div className="task-container">
+        <button className="btn btn-create" onClick={this.showForm}><h3>New Task</h3></button>
+        <button className="btn btn-show-done" onClick={this.showDoneContainer}>{this.state.todoContainer ? <h3>Show done list </h3> : <h3>Show To-Do list</h3>} </button>
+
         {(this.state.todoContainer) ?
-          <div className="tasks-todo">
+          <div className="container">
+            <h3>To-Do</h3>
+            <hr className="container-separator"></hr>
+            <div className="tasks tasks-todo">
 
-            {this.state.tasks.map((task) => {
-              return task.status === 'done' ? false : <TaskCard title={task.title} body={task.body} onClickDelete={() => this.deleteTask(task._id)} showEditForm={() => this.showEditForm(task._id)} done={() => this.done(task._id)} id={task._id}></TaskCard>
-            })}
+              {this.state.tasks.map((task) => {
+                return task.status === 'done' ? false : <TaskCard title={task.title} body={task.body} onClickDelete={() => this.deleteTask(task._id)} showEditForm={() => this.showEditForm(task._id)} done={() => this.done(task._id, task.status)} id={task._id}></TaskCard>
+              })}
 
+            </div>
+            <hr className="container-separator" />
           </div>
           :
-          <div className="tasks-done">
+          <div className="container">
+            <h3>Done</h3>
+            <hr className="container-separator" />
+            <div className="tasks tasks-done">
 
-            {this.state.tasks.map((task) => {
-              return task.status === 'done' ? <TaskCard title={task.title} body={task.body} id={task._id}></TaskCard> : false
-            })}
+              {this.state.tasks.map((task) => {
+                return task.status === 'todo' ? false : <TaskCard title={task.title} body={task.body} id={task._id} done={() => this.done(task._id, task.status)} onClickDelete={() => this.deleteTask(task._id)}></TaskCard>
+              })}
 
+            </div>
+            <hr className="container-separator" />
           </div>
 
         }
+
         {this.state.edit ? <Form onClick={this.showEditForm} onSubmitForm={this.editTask} edit={this.state.edit} onChangeTitle={this.onChangeTitle} onChangeBody={this.onChangeBody}>Edit</Form> : false}
         {this.state.create ? <Form onSubmitForm={this.onSubmitForm} onClick={this.showForm} onChangeTitle={this.onChangeTitle} onChangeBody={this.onChangeBody}>Create</Form> : false}
 
