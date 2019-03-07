@@ -36,19 +36,17 @@ export default class TaskContainer extends Component {
   componentDidMount = () => {
     axios.get(process.env.REACT_APP_BASE_URL + "/task")
       .then((tasks) => {
-        console.log(tasks.data)
         this.setState({
           tasks: tasks.data,
           tasksDone: tasks.data.filter((task) => task.status === 'done'),
           tasksTodo: tasks.data.filter((task) => task.status === 'todo'),
-         // tasksDoing:tasks.data.filter((task) => task.status === 'doing'),
 
         })
         this.setState({
           tasksDonelength: this.state.tasksDone.length,
           tasksTodolength: this.state.tasksTodo.length,
         })
-        console.log(this.state.tasksTodolength)
+
 
       })
   }
@@ -68,7 +66,7 @@ export default class TaskContainer extends Component {
         body: e.target.value,
       }
     })
-    console.log(e.target.value)
+
   }
   onSubmitForm = (e) => {
     e.preventDefault();
@@ -86,8 +84,7 @@ export default class TaskContainer extends Component {
             })
           })
       })
-    // console.log("body", this.state.task.body)
-    // console.log("title", this.state.task.title)
+
   }
   deleteTask = (id) => {
     axios.delete(process.env.REACT_APP_BASE_URL + `/task/${id}`, { body: id })
@@ -98,9 +95,7 @@ export default class TaskContainer extends Component {
             return task._id !== id;
           })
         })
-
-
-      }) // change for array element pop
+      })
   }
   editTask = (e) => {
 
@@ -180,17 +175,17 @@ export default class TaskContainer extends Component {
 
   render() {
     const data = {
-      labels: ['Todo', 'Done','Total'],
+      labels: ['Todo', 'Done', 'Total'],
       datasets: [
         {
-          label:"My tasks",
+          label: "My tasks",
           backgroundColor: 'rgba(0,205,109,0.2)',
           borderColor: 'rgba(0,205,109,1)',
           borderWidth: 1,
-         
+
           hoverBackgroundColor: 'rgba(0,205,109,0.4)',
           hoverBorderColor: 'rgba(0,205,109,1)',
-          data: [this.state.tasksTodolength, this.state.tasksDonelength,this.state.tasks.length,0]
+          data: [this.state.tasksTodolength, this.state.tasksDonelength, this.state.tasks.length, 0]
         }
 
       ]
@@ -201,10 +196,10 @@ export default class TaskContainer extends Component {
           <button className="btn main-btn btn-create" onClick={this.showForm}><h3>New Task</h3></button>
           <button className="btn main-btn btn-show-done" onClick={this.showDoneContainer}>{this.state.todoContainer ? <h3>Show stats </h3> : <h3>Show tasks list</h3>} </button>
         </div>
-        :
-        <div className="button-container">
-          <button className="btn main-btn btn-show-done full" onClick={this.showDoneContainer}>{this.state.todoContainer ? <h3>Show stats </h3> : <h3>Show tasks list</h3>} </button>
-        </div>
+          :
+          <div className="button-container">
+            <button className="btn main-btn btn-show-done full" onClick={this.showDoneContainer}>{this.state.todoContainer ? <h3>Show stats </h3> : <h3>Show tasks list</h3>} </button>
+          </div>
         }
         {this.state.todoContainer ?
           <div>
