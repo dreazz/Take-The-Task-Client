@@ -183,13 +183,13 @@ export default class TaskContainer extends Component {
       labels: ['Todo', 'Done','Total'],
       datasets: [
         {
-
-          backgroundColor: 'rgba(255,99,132,0.2)',
-          borderColor: 'rgba(255,99,132,1)',
+          label:"My tasks",
+          backgroundColor: 'rgba(0,205,109,0.2)',
+          borderColor: 'rgba(0,205,109,1)',
           borderWidth: 1,
          
-          hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-          hoverBorderColor: 'rgba(255,99,132,1)',
+          hoverBackgroundColor: 'rgba(0,205,109,0.4)',
+          hoverBorderColor: 'rgba(0,205,109,1)',
           data: [this.state.tasksTodolength, this.state.tasksDonelength,this.state.tasks.length,0]
         }
 
@@ -197,10 +197,15 @@ export default class TaskContainer extends Component {
     };
     return (
       <div className="task-container">
-        <div className="button-container">
+        {this.state.todoContainer ? <div className="button-container">
           <button className="btn main-btn btn-create" onClick={this.showForm}><h3>New Task</h3></button>
-          <button className="btn main-btn btn-show-done" onClick={this.showDoneContainer}>{this.state.todoContainer ? <h3>Show done list </h3> : <h3>Show Stats</h3>} </button>
+          <button className="btn main-btn btn-show-done" onClick={this.showDoneContainer}>{this.state.todoContainer ? <h3>Show stats </h3> : <h3>Show tasks list</h3>} </button>
         </div>
+        :
+        <div className="button-container">
+          <button className="btn main-btn btn-show-done full" onClick={this.showDoneContainer}>{this.state.todoContainer ? <h3>Show stats </h3> : <h3>Show tasks list</h3>} </button>
+        </div>
+        }
         {this.state.todoContainer ?
           <div>
             <div className="container">
@@ -224,7 +229,7 @@ export default class TaskContainer extends Component {
               <div className="tasks tasks-done">
 
                 {this.state.tasks.map((task) => {
-                  return task.status === 'todo' ? false : <TaskCard title={task.title} body={task.body} id={task._id} done={() => this.done(task._id, task.status)} onClickDelete={() => this.deleteTask(task._id)}></TaskCard>
+                  return task.status === 'todo' ? false : <TaskCard title={task.title} body={task.body} id={task._id} redo={() => this.done(task._id, task.status)} onClickDelete={() => this.deleteTask(task._id)}></TaskCard>
                 })}
 
               </div>
@@ -233,9 +238,9 @@ export default class TaskContainer extends Component {
           </div>
           :
           <div>
-            <HorizontalBar data={data} width={100} height={1000} options={{
+            <HorizontalBar data={data} width={50} height={500} options={{
               maintainAspectRatio: false
-            }}></HorizontalBar>
+            }} ></HorizontalBar>
           </div>
         }
         {this.state.edit ? <Form onClick={this.showEditForm} onSubmitForm={this.editTask} edit={this.state.edit} onChangeTitle={this.onChangeTitle} onChangeBody={this.onChangeBody}>Edit</Form> : false}

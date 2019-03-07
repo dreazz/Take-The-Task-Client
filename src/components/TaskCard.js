@@ -16,6 +16,7 @@ export default class TaskCard extends Component {
         <i className="fas fa-trash-alt fa-1x btn btn-delete" onClick={this.props.onClickDelete}></i>
         <i className="fas fa-pencil-alt fa-1x btn btn-edit" onClick={this.props.showEditForm}></i>
         <i className="fas fa-check-circle fa-1x btn btn-done" onClick={this.props.done}></i>
+        <i className="fas fa-undo fa-1x btn btn-redo" onClick={this.props.redo}></i>
         
         </div>
       </div>
