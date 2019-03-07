@@ -43,7 +43,7 @@ class Login extends Component {
               value={password}
               onChange={this.handleInputChange}
             />
-            <button className="btn btn-login">Log in</button>
+            <button className="btn btn-submit">Log in</button>
             {error ? (
               <div>
                 <p className="error">{error.message}</p>

@@ -1,3 +1,17 @@
+*{
+  font-family:'Montserrat', sans-serif;
+}
+.loading-div{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-loading{
+  margin:0 auto;
+}
+.error{
+  color:#ff0041
+}
 .title-nav{
  color:#ff0041;
 }

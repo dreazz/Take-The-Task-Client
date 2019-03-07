@@ -23,7 +23,7 @@ class App extends Component {
  }
  render() {
    if (this.state.loading) {
-     return <p>loading</p>
+     return <div className="loading-div"><img className="logo-loading" src="/logo.png"></img></div>
    }
    return <Navigation authenticated={this.state.authenticated} />
    }
